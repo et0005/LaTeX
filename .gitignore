@@ -275,3 +275,13 @@ TSWLatexianTemp*
 # Makeindex log files
 *.lpz
 *.pdf
+
+# OSX Dev
+.DS_Store
+
+# Jetbrains IDE
+.cproject
+.idea
+.metadata
+.project
+.settings
