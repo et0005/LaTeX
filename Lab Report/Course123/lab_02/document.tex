@@ -1,0 +1,216 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Setup Base Document
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Define Font Size ---- %%
+\documentclass[12pt]{article}
+
+%% ---- Define Margins ---- %%
+\usepackage[margin=1.0in]{geometry}
+
+%% ---- Variables ---- %%
+\newcommand{\fullname}{\input{../student_name.txt}}
+
+\newcommand{\university}{\input{../university_name.txt}}
+\newcommand{\department}{\input{../department_name.txt}}
+
+\newcommand{\coursename}{\input{../course_name.txt}}
+\newcommand{\sectionname}{\input{../course_section.txt}}
+
+\newcommand{\duedate}{\input{due_date.txt}}
+\newcommand{\labtitle}{\input{lab_title.txt}}
+\newcommand{\labnumber}{\#1}
+
+\newif\iffigures
+\newif\iftables
+\newif\ifcode
+
+\figurestrue
+%\figuresfalse
+\tablestrue
+%\tablesfalse
+\codetrue
+%codefalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Import LaTeX Packages
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Header/Footer Packages ---- %%
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+%% ---- Reference Packages ---- %%
+\usepackage{dirtytalk}
+\usepackage{hyperref}
+\usepackage{float}
+
+%% ---- Dummy Text Packages ---- %%
+\usepackage{lipsum}
+
+%% ---- Image Packages ---- %%
+\usepackage{graphicx}
+\usepackage[dvipsnames]{color}
+\usepackage{xcolor}
+
+%% ---- Code Packages ---- %%
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Format Content
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Format Code Blocks ---- %%
+\lstset{
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+}
+
+\renewcommand{\lstlistlistingname}{List of Source Code}
+\renewcommand{\lstlistingname}{Code}
+\renewcommand\_{\textunderscore\allowbreak}
+
+%% ---- Format Lists ---- %%
+\renewcommand{\labelitemii}{\textbullet}
+\renewcommand{\labelitemiii}{\textbullet}
+
+%% ---- Header & Footer Settings ---- %%
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+%% ---- Header/Footer Should Contain Student Name, Page Number, and Course Number ---- %%
+\chead{\scriptsize \fullname \hfill Lab\labnumber \hfill \sectionname}
+\cfoot{\scriptsize \thepage\ of~\pageref{LastPage}}
+
+%% ---- Define Custom Colors ---- %%
+\makeatletter
+\let\old@rule\@rule
+\def\@rule[#1]#2#3{\textcolor{UniColor}{\old@rule[#1]{#2}{#3}}}
+\makeatother
+
+\definecolor{UniColor}{HTML}{0077C8}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Document Begin
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Title Page
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+    \begin{center}
+    	\scriptsize \textbf{\university\\}
+    	\bigskip
+
+        \noindent\rule{\textwidth}{20pt}
+
+        \mbox{}
+        \vfill
+
+        \Huge
+        \color{UniColor}
+        \textbf{Lab Report}
+
+        \mbox{}
+        \vfill
+
+        \LARGE
+        \textbf{Laboratory \labnumber}\\
+        \color{black}
+        \labtitle
+
+        \mbox{}
+        \vfill
+
+		\normalsize
+        \fullname\\
+		\medskip
+		Course: \coursename\\
+		Section: \sectionname\\
+		\medskip
+		Due Date: \duedate
+
+        \mbox{}
+        \vfill
+
+        \noindent\rule{\textwidth}{20pt}
+
+        \bigskip
+    	\scriptsize \textbf{\department\\}
+    \end{center}
+\end{titlepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Table of Contents
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\contentsname{Table of Contents}
+\tableofcontents
+\newpage
+
+\iffigures
+    \listoffigures
+    \newpage
+\fi
+
+\iftables
+    \listoftables
+    \newpage
+\fi
+
+\ifcode
+    \lstlistoflistings
+    \newpage
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Body Content
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{theory}
+
+\include{results}
+
+\include{qa}
+
+\include{conclusions}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Appendix
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{appendix}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Document End
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
