@@ -1,0 +1,41 @@
+
+\section{Theory}\label{sec:theory}
+    Throughout this lab exercise we explore a few key concepts regarding processes such as:
+
+    \subsection{Process}\label{subsec:process}
+        A process is a unique instance of system resources to be utilized by an execution.
+        For example in unix / linux systems when any command is issued the operating system creates a new process.
+        Each process is given a unique identification number called a process ID (pid).
+
+    \subsection{States of Process}\label{subsec:states}
+        In unix / linux systems processes can be tracked and their information given via the process status (ps) command.
+        You can gather: the user id (UID) that the process belongs to, the pid, the parent pid (ppid), the CPU utilization, the start time, the terminal type, the CPU time taken and the command that started the process.
+        A process can either be a parent or a child, if a process did not spawn a child (see below \texttt{fork()} command) it's parent will usually have shell as a parent.
+
+    \subsection{Orphan Process}\label{subsec:orphan}
+        When a parent spawns a child process it waits for the child to finish or be killed to proceed.
+        In the event that the parent is killed before the child can complete this causes the child process to be orphaned.
+        Upon becoming an orphan process the ppid shifts on all child processes related to the killed parent process.
+
+    \subsection{Zombie Process}\label{subsec:zombie}
+        A zombie process is a special case where a process is killed but still shows up in a process table.
+        This can also occur when a process completes execution.
+        In order for the parent process to be properly notified of a child processes' completion, a child process always enters a zombie process state before the handoff is complete.
+
+    \subsection{fork()}\label{subsec:fork}
+        This command creates a process, it has no arguments and it returns the process ID of the process it creates.
+        The process that is created is a child of the process which invoked the \texttt{fork()} command.
+        There are three possible return values for this command: a negative value, zero, and a positive value.
+        If the return value is negative a child process was not created.
+        If the return value is positive a child process was created and zero was returned to the child process.
+
+    \subsection{exit()}\label{subsec:exit}
+        This command terminates a process, it has no arguments and it returns to the parent process the exit status of the killed process.
+        Upon \texttt{exit()} the parent process is sent a \texttt{SIGCHLD} signal.
+        This signal can be used or caught by the \texttt{wait()} command.
+        Using this signal with the \texttt{wait()} command is beneficial to eliminating zombie processes.
+
+    \subsection{wait()}\label{subsec:wait}
+        This command halts execution until one of its children terminates, it takes in a signal to wait for, and it can return either a pid of the terminated child or -1 if there is an error.
+        It can collect the exit status of the \texttt{exit()} command as an argument.
+        The \texttt{SIGCHLD} signal can be utilized in a handler to “reap” zombie processes, which is the most robust way to handle processes.

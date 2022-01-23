@@ -1,0 +1,15 @@
+
+\section{Questions \& Answers}\label{sec:qa}
+
+    \subsection{Part 1}\label{subsec:part1_qa}
+        Part 1 of the lab explored manipulating a variable from within a parent process and within a child process.
+        The variable, named "val", was initialized to "0" and then incremented by different values from both the parent and child processes.
+        The child should increment "val" by 2, and the parent should increment "val" by 5.
+
+        \medskip
+        \noindent This procedure then posed the question:
+
+        \say{What can you conclude about the values of the variable \say{val}?}
+
+        % each process has its own area of memory protected against modification by other processes.
+        % The parent and child do not share the same memory, the value of val is 0 as initialized for both parent and child.
