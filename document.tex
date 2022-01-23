@@ -1,0 +1,239 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Import LaTeX Packages
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Variables ---- %%
+% Define font size
+\documentclass[12pt]{article}
+
+% Define margin size
+\usepackage[margin=1.0in]{geometry}
+
+% Define path to images
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+%% ---- Content ---- %%
+\usepackage{hyperref}
+\usepackage{mathptmx}
+\usepackage{enumitem}
+
+% Used to create vertical pipe
+\usepackage{mathtools} 
+\usepackage{amsmath} 
+
+% Used for boolean logic
+\usepackage{ifthen}
+\newboolean{showgithub}
+\newboolean{showitchio}
+\newboolean{showaffiliations}
+\newboolean{showreference}
+\newboolean{showvolunteer}
+
+% Used to turn off page numbers
+\pagenumbering{gobble}
+
+% Define Custom Shape
+\newcommand{\titleBullet}{ $\circ$ }
+
+% Format Lists
+\setlist{nolistsep}
+\renewcommand{\labelitemii}{\textbullet}
+\renewcommand{\labelitemiii}{\textbullet}
+\newlist{noitemize}{itemize}{1}
+\setlist[noitemize]{label={}, labelsep=0pt, leftmargin=0pt}
+
+% H1 - Section Header Name
+\newcommand{\sectionheader}[1]{
+    \bigbreak
+    \noindent
+    \large
+    \textbf{#1} \\
+    \footnotesize
+}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Bio Information
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Variables ---- %%
+\newcommand{\fullname}{First Last}
+\newcommand{\address}{1234 Street St \titleBullet City, State 12345}
+\newcommand{\phonenumber}{000-111-2222}
+\newcommand{\emailaddress}{first.last@domain.com}
+
+% Usernames
+\newcommand{\linkedinusername}{myUsername}
+\newcommand{\githubusername}{myUsername}
+\newcommand{\itchiousername}{myUsername}
+
+% Enable / Disable Icons
+\setboolean{showgithub}{false}
+\setboolean{showitchio}{false}
+
+%% ---- Content ---- %%
+\begin{center}
+    \Huge
+    \fullname
+
+    \small
+    \address
+    \titleBullet
+    \phonenumber
+    \titleBullet
+    \href{mailto:\emailaddress}{\emailaddress}
+    \titleBullet
+    \href{https://www.linkedin.com/in/\linkedinusername/}{\includegraphics[width=0.5cm, height=0.5cm]{logo_linkedin.png}}
+    \ifshowgithub
+    \href{https://github.com/in/\githubusername/}{\includegraphics[width=0.5cm, height=0.5cm]{logo_github.png}}
+    \fi
+    \ifshowitchio
+    \href{https://\itchiousername.itch.io/}{\includegraphics[width=0.5cm, height=0.5cm]{logo_itch_io.png}}
+    \fi
+    \\
+    \noindent\makebox[\linewidth]{\rule{\paperwidth}{1.0pt}}
+\end{center}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Section: Technical Skills
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Variables ---- %%
+\newcommand{\languages}{C++, Java, Python, C\#, JavaScript, PHP, HTML, MySQL, Bash}
+\newcommand{\developmenttools}{Atlassian Suite (Jira, Bitbucket, Confluence), Jenkins (Continuous Integration), GIT, LaTeX, Pytest}
+\newcommand{\softwareapplications}{Microsoft Office, VMWare, Intellj IDEs, VS Code, RTI DDS, ANTLR}
+\newcommand{\softwaredevelopmentlifecycles}{Agile Scrum, Waterfall}
+\newcommand{\operatingsystems}{RHEL, CentOS, MacOS, Windows}
+
+%% ---- Content ---- %%
+\sectionheader{Technical Skills}
+
+\begin{noitemize}
+    \itemsep0.25em
+    \item \textbf{Languages / Markups:} \languages
+    \item \textbf{Development Tools:} \developmenttools
+    \item \textbf{Software / Applications:} \softwareapplications
+    \item \textbf{SDLCs / Processes:} \softwaredevelopmentlifecycles
+    \item \textbf{Operating Systems:} \operatingsystems
+\end{noitemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Section: Experience
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Variables ---- %%
+\newcommand{\squeezeup}{\vspace{-4mm}}
+
+%% ---- Content ---- %%
+\sectionheader{Experience}
+\squeezeup
+\input{experience/job_2020.tex}
+\input{experience/job_1970.tex}
+
+\iffalse % Content is hidden
+\input{experience/job_1970.tex}
+\fi % Content is hidden
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Section: Education
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% #1 - Name
+% #2 - Location
+% #3 - Date
+\newcommand{\eductionitem}[4]{#1 \(|\) #2 \(|\) #3}
+
+%% ---- Variables ---- %%
+\newcommand{\education}
+{\eductionitem{\textbf{Bachelor of Engineering in Computer Engineering}}{University - City, State}{Month Year}{}
+\\
+\eductionitem{Certificate: OSHA Training}{City, State}{Month Year}{}
+}
+
+%% ---- Content ---- %%
+\sectionheader{Education}
+
+\noindent
+\education
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Section: Affiliations and Awards
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Variables ---- %%
+\setboolean{showaffiliations}{true}
+\input{experience/affiliations_awards.tex}
+
+%% ---- Content ---- %%
+\ifshowaffiliations
+    \sectionheader{Affiliations and Awards}
+
+    \noindent
+    \affiliations
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Section: Volunteer Experience
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Variables ---- %%
+\setboolean{showvolunteer}{true}
+
+%% ---- Content ---- %%
+\ifshowvolunteer
+    \sectionheader{Volunteer Experience}
+    \squeezeup
+    \input{experience/volunteer_ieee.tex}
+
+    \iffalse % Content is hidden
+    \input{experience/volunteer_ieee.tex.tex}
+    \fi % Content is hidden
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Section: References
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ---- Variables ---- %%
+\setboolean{showreference}{true}
+\input{experience/references.tex}
+
+%% ---- Content ---- %%
+\sectionheader{References}
+
+\noindent
+\ifthenelse{\boolean{showreference}}{\references}{Available upon request}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Section: End
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
