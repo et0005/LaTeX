@@ -65,4 +65,6 @@ int main()
         // 4.b. Print "val" to console, along with the pid of the parent
         std::cout << "\nThe parent pid is: " << getpid() << " Val is: " << val << "\n" << std::endl;
     }
+
+    return 0;
 }

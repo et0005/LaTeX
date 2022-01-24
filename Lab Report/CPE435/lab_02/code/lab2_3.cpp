@@ -62,4 +62,6 @@ int main(int argc, char * argv[])
 		// Terminate
 		exit(0);
 	}
+
+    return 0;
 }

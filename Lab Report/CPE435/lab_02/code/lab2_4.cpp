@@ -23,5 +23,36 @@ using namespace std;
 
 int main()
 {
+    pid_t zombie;
+    pid_t orphan;
 
+    zombie = fork();
+    if (zombie > 0) {
+        // Parent process
+        // Wait, NOT for the child to finish
+        sleep(50);
+    } else if (zombie < 0) {
+        // Child was not created, fork failed
+        std::cout << "\nUnable to create a child process\n" << std::endl;
+    } else {
+        // Child successfully created
+        // Terminate
+        exit(0);
+    }
+
+    orphan = fork();
+    if (orphan > 0) {
+        // Parent process
+        std::cout << "\nParent process\n" << std::endl;
+    } else if (orphan < 0) {
+        // Child was not created, fork failed
+        std::cout << "\nUnable to create a child process\n" << std::endl;
+    } else {
+        // Child successfully created
+        std::cout << "\nChild process\n" << std::endl;
+        // Wait
+        sleep(30);
+    }
+
+    return 0;
 }

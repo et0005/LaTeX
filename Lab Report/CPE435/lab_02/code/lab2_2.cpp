@@ -132,4 +132,6 @@ int main()
         // 5. Terminate
         exit(0);
     }
+
+    return 0;
 }
