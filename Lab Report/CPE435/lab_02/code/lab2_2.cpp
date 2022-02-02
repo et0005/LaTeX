@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <time.h>
 
@@ -38,30 +39,30 @@
 //
 // -------------------------------------------------------------------
 
-int subtract(int a, int b)
+void subtract(int a, int b)
 {
-    difference = a - b;
+    int difference = a - b;
 
     // 3.b. Print the result of that operation to console, along with the pid of the process that is printing
-    std::cout << "\nResult is: " << difference << "Pid is: " << getpid() << "\n" << std::endl;
+    std::cout << "\nSubtraction Result is: " << difference << ". Pid is: " << getpid() << "\n" << std::endl;
     //return difference;
 }
 
-int add(int a, int b)
+void add(int a, int b)
 {
-    sum = a + b;
+    int sum = a + b;
 
     // 4.b. Print the result of that operation to console, along with the pid of the process that is printing
-    std::cout << "\nResult is: " << sum << "Pid is: " << getpid() << "\n" << std::endl;
+    std::cout << "\nAddition Result is: " << sum << ". Pid is: " << getpid() << "\n" << std::endl;
     //return sum;
 }
 
-int multiply(int a, int b)
+void multiply(int a, int b)
 {
-    mult = a * b;
+    int mult = a * b;
 
     // 3.f. Print the result of that operation to console, along with the pid of the process that is printing
-    std::cout << "\nResult is: " << mult << "Pid is: " << getpid() << "\n" << std::endl;
+    std::cout << "\nMultiplication Result is: " << mult << ". Pid is: " << getpid() << "\n" << std::endl;
     //return mult;
 }
 
@@ -71,6 +72,7 @@ int main()
     int b = 0;
 
     pid_t child1;
+    pid_t child2;
 
     // Read a from user input
 	std::cout << "\nEnter a number.\n" << std::endl;
@@ -96,11 +98,11 @@ int main()
             // Child2 successfully created
 
             // 4.a. Call a function that adds two numbers passed in
-            adds(a, b);
+            add(a, b);
 
             // 4.c. Terminate
             exit(0);
-        } else if (pid < 0) {
+        } else if (child2 < 0) {
             // Child was not created, fork failed
 
             std::cout << "\nUnable to create a child process\n" << std::endl;
@@ -108,15 +110,15 @@ int main()
             // Parent (Child1) process after fork succeeds
 
             // 3.d. Wait for child process
-            wait();
+            waitpid(-1, &child2, 0);
 
             // 3.e. Upon completion of "child2", call a function that multiplies two numbers passed in
-            multiplies(a, b);
+            multiply(a, b);
 
             // 3.g. Terminate
             exit(0);
         }
-    } else if (pid < 0) {
+    } else if (child1 < 0) {
          // Child was not created, fork failed
 
          std::cout << "\nUnable to create a child process\n" << std::endl;
@@ -127,7 +129,7 @@ int main()
         std::cout << "\nThe parent pid is: " << getpid() << "\n" << std::endl;
 
         // Wait for child process
-        wait();
+        waitpid(-1, &child1, 0);
 
         // 5. Terminate
         exit(0);

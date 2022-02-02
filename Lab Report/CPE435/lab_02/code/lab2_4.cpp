@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <time.h>
 using namespace std;
@@ -29,6 +30,7 @@ int main()
     zombie = fork();
     if (zombie > 0) {
         // Parent process
+        std::cout << "\nZombie Parent process " << getpid() << "\n" << std::endl;
         // Wait, NOT for the child to finish
         sleep(50);
     } else if (zombie < 0) {
@@ -36,6 +38,7 @@ int main()
         std::cout << "\nUnable to create a child process\n" << std::endl;
     } else {
         // Child successfully created
+        std::cout << "\nZombie Child process " << getpid() << "\n" << std::endl;
         // Terminate
         exit(0);
     }
@@ -43,13 +46,13 @@ int main()
     orphan = fork();
     if (orphan > 0) {
         // Parent process
-        std::cout << "\nParent process\n" << std::endl;
+        std::cout << "\nOrphan Parent process " << getpid() << "\n" << std::endl;
     } else if (orphan < 0) {
         // Child was not created, fork failed
         std::cout << "\nUnable to create a child process\n" << std::endl;
     } else {
         // Child successfully created
-        std::cout << "\nChild process\n" << std::endl;
+        std::cout << "\nOrphan Child process " << getpid() << "\n" << std::endl;
         // Wait
         sleep(30);
     }
